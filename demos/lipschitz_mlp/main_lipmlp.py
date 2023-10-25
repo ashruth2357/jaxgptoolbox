@@ -34,9 +34,9 @@ if __name__ == '__main__':
     return loss_sdf + alpha * loss_lipschitz
 
   @jit
-  def update(epoch, opt_state, alpha, x_, y0_, y1_):
+  def update(epoch, opt_state, alpha, x_, y0_, y1_,y2_):
     params_ = get_params(opt_state)
-    value, grads = value_and_grad(loss, argnums = 0)(params_, alpha, x_, y0_, y1_)
+    value, grads = value_and_grad(loss, argnums = 0)(params_, alpha, x_, y0_, y1_,y2_)
     opt_state = opt_update(epoch, grads, opt_state)
     return value, opt_state
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     y1 = jgp.sdf_circle(x)
     y2 = jgp.sdf_cross(x)
     # update
-    loss_value, opt_state = update(epoch, opt_state, alpha, x, y0, y1)
+    loss_value, opt_state = update(epoch, opt_state, alpha, x, y0, y1,y2)
     loss_history[epoch] = loss_value
     pbar.set_postfix({"loss": loss_value})
 
