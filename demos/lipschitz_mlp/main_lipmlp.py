@@ -48,7 +48,7 @@ if __name__ == '__main__':
     x = np.array(random.rand(hyper_params["samples_per_epoch"], hyper_params["dim_in"]))
     y0 = jgp.sdf_star(x)
     y1 = jgp.sdf_circle(x)
-
+    y2 = jgp.sdf_cross(x)
     # update
     loss_value, opt_state = update(epoch, opt_state, alpha, x, y0, y1)
     loss_history[epoch] = loss_value
