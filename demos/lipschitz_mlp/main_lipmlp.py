@@ -8,7 +8,7 @@ if __name__ == '__main__':
   hyper_params = {
     "dim_in": 2,
     "dim_t": 1,
-    "dim_out": 1,
+    "dim_out": 2,
     "h_mlp": [64,64,64,64,64],
     "step_size": 1e-4,
     "grid_size": 32,
@@ -26,10 +26,11 @@ if __name__ == '__main__':
   opt_state = opt_init(params)
 
   # define loss function and update function
-  def loss(params_, alpha, x_, y0_, y1_):
+  def loss(params_, alpha, x_, y0_, y1_,y2_):
     out0 = model.forward(params_, np.array([0.0]), x_) # star when t = 0.0
     out1 = model.forward(params_, np.array([1.0]), x_) # circle when t = 1.0
-    loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2)
+    out2 = model.forward(params_, np.array([2.0]), x_) # cross when t = 2.0
+    loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2) + np.mean((out2 - y2_)**2)
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
 
