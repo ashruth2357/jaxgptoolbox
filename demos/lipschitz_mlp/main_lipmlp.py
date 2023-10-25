@@ -85,5 +85,5 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  anim = animation.FuncAnimation(fig, animate, frames=np.linspace(0, 1, 50), interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames=np.linspace(0, 2, 50), interval=50)
   anim.save("lipschitz_mlp_interpolation.mp4")
