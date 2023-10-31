@@ -85,8 +85,50 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(0, 2, 100)[1:], interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(0, 2, 50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.linspace(1, 2, 50), interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
   anim2.save("Lipschitz_mlp_interpolation2.mp4")
+  # create video for star to circle
+fig_star_circle = plt.figure()
+x = jgp.sample_2D_grid(hyper_params["grid_size"]) # sample on unit grid for visualization
+def animate_star_circle(t):
+    plt.cla()
+    out = model.forward_eval(params_final, np.array([t]), x)
+    levels = onp.linspace(-0.5, 0.5, 21)
+    im = plt.contourf(out.reshape(hyper_params['grid_size'], hyper_params['grid_size']), levels=levels, cmap=sdf_cm)
+    plt.axis('equal')
+    plt.axis("off")
+    return im
+
+anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(0, 1, 50), interval=50)
+anim_star_circle.save("star_to_circle.mp4")
+
+# create video for circle to cross
+fig_circle_cross = plt.figure()
+def animate_circle_cross(t):
+    plt.cla()
+    out = model.forward_eval(params_final, np.array([t]), x)
+    levels = onp.linspace(-0.5, 0.5, 21)
+    im = plt.contourf(out.reshape(hyper_params['grid_size'], hyper_params['grid_size']), levels=levels, cmap=sdf_cm)
+    plt.axis('equal')
+    plt.axis("off")
+    return im
+
+anim_circle_cross = animation.FuncAnimation(fig_circle_cross, animate_circle_cross, frames=np.linspace(1, 2, 50), interval=50)
+anim_circle_cross.save("circle_to_cross.mp4")
+
+# create video for cross to circle
+fig_cross_circle = plt.figure()
+def animate_cross_circle(t):
+    plt.cla()
+    out = model.forward_eval(params_final, np.array([t]), x)
+    levels = onp.linspace(-0.5, 0.5, 21)
+    im = plt.contourf(out.reshape(hyper_params['grid_size'], hyper_params['grid_size']), levels=levels, cmap=sdf_cm)
+    plt.axis('equal')
+    plt.axis("off")
+    return im
+
+anim_cross_circle = animation.FuncAnimation(fig_cross_circle, animate_cross_circle, frames=np.linspace(2, 1, 50), interval=50)
+anim_cross_circle.save("cross_to_circle.mp4")
