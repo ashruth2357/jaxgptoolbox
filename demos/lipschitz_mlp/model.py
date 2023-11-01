@@ -115,4 +115,4 @@ class lipmlp:
     W, b = params_final[-1] # final layer
     out = np.dot(W, x) + b
     return out[0]
-forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None, 0), out_axes=0)
+  forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None, 0), out_axes=0)
