@@ -100,8 +100,8 @@ class lipmlp:
       W = self.weight_normalization(W, jax.nn.softplus(c))
       params_final.append([W, b])
     return params_final
-
- def forward_eval_single(self, params_final, t, x):
+  
+  def forward_eval_single(self, params_final, t, x):
     """
     (Optional) this is a standard forward pass of a mlp. This is useful to speed up the performance during test time 
     """
