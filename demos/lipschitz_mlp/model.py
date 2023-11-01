@@ -51,7 +51,7 @@ class lipmlp:
     absrowsum = np.sum(np.abs(W), axis=1)
     scale = np.minimum(1.0, softplus_c/absrowsum)
     return W * scale[:,None]
-
+  
   def forward_single(self, params_net, t, x):
     """
     Forward pass of a lipschitz MLP
