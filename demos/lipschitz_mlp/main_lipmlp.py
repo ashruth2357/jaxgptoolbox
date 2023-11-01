@@ -27,9 +27,9 @@ if __name__ == '__main__':
 
    # define loss function and update function
   def loss(params_, alpha, x_, y0_, y1_,y2_):
-    out0 = model.forward(params_, np.array([0.0]), x_) # star when t = 0.0
-    out1 = model.forward(params_, np.array([1.0]), x_) # circle when t = 1.0
-    out2 = model.forward(params_, np.array([2.0]), x_) # cross when t = 2.0
+    out0 = model.forward(params_, np.array([0.0,1.0]), x_) # star when t = 0.0
+    out1 = model.forward(params_, np.array([1.0,2.0]), x_) # circle when t = 1.0
+    out2 = model.forward(params_, np.array([2.0,3.0]), x_) # cross when t = 2.0
     loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2) + np.mean((out2 - y2_)**2)
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
@@ -85,8 +85,8 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  anim = animation.FuncAnimation(fig, animate, frames = np.mgrid[0:1:50j, 1:2:50j], interval=50)
-  anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1:2:50j, 2:3:50j], interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = np.mgrid[0.0:1.0:50j, 2.0:3.0:50j], interval=50)
+  anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
   anim2.save("Lipschitz_mlp_interpolation2.mp4")
@@ -102,7 +102,7 @@ def animate_star_circle(t):
     plt.axis("off")
     return im
 
-anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.mgrid[0:1:50j, 1:2:50j], interval=50)
+anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.mgrid[0.0:1.0:50j, 1.0:2.0:50j], interval=50)
 anim_star_circle.save("star_to_circle.mp4")
 
 # create video for circle to cross
@@ -116,7 +116,7 @@ def animate_circle_cross(t):
     plt.axis("off")
     return im
 
-anim_circle_cross = animation.FuncAnimation(fig_circle_cross, animate_circle_cross, frames=np.mgrid[1:2:50j, 2:3:50j], interval=50)
+anim_circle_cross = animation.FuncAnimation(fig_circle_cross, animate_circle_cross, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
 anim_circle_cross.save("circle_to_cross.mp4")
 
 # create video for cross to circle
@@ -130,5 +130,5 @@ def animate_cross_circle(t):
     plt.axis("off")
     return im
 
-anim_cross_circle = animation.FuncAnimation(fig_cross_circle, animate_cross_circle, frames=np.mgrid[2:3:50j, 1:2:50j], interval=50)
+anim_cross_circle = animation.FuncAnimation(fig_cross_circle, animate_cross_circle, frames=np.mgrid[2.0:3.0:50j, 1.0:2.0:50j], interval=50)
 anim_cross_circle.save("cross_to_circle.mp4")
