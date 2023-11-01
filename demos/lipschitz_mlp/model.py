@@ -116,19 +116,3 @@ class lipmlp:
     out = np.dot(W, x) + b
     return out[0]
 forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None, 0), out_axes=0)
- def 2Dforward_eval(self,params_final, t, x):
-  latent_code = np.array([t,t+1])
-  latent_code = np.tile(latent_code, (x.shape[0],1))
-
-  x_with_latent = np.hstack((x, latent_code))
-
-  #Forward pass
-  for ii in range(len(params_final) - 1):
-    W, b= params_final[ii]
-    x_with_latent = jax.nn.relu(np.dot(W, x_with_latent) + b)
-
-
-  W, b = params_final[-1]  #Final layer
-  out = np.dot(W, x_with_latent) + b
-  return out[0]
-  2Dforward_eval = jax.vmap(2Dforward_eval, in_axes=(None, None, None, 0), out_axes=0)
