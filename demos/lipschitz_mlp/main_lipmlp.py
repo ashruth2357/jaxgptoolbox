@@ -7,7 +7,7 @@ if __name__ == '__main__':
   # hyper parameters
   hyper_params = {
     "dim_in": 2,
-    "dim_t": 1,
+    "dim_t": 2,
     "dim_out": 2,
     "h_mlp": [64,64,64,64,64],
     "step_size": 1e-4,
