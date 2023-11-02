@@ -12,7 +12,7 @@ if __name__ == '__main__':
     "h_mlp": [64,64,64,64,64],
     "step_size": 1e-4,
     "grid_size": 32,
-    "num_epochs": 20000,
+    "num_epochs": 2000,
     "samples_per_epoch": 512
   }
   alpha = 1e-6
@@ -85,7 +85,12 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  anim = animation.FuncAnimation(fig, animate, frames = np.mgrid[0:2:50j,1:3:50j], interval=50)
+  a = np.linspace(0,2,50)
+  b = np.linspace(1,3,50)
+  x = np.mgrid[0:2:50j,1:3:50j]
+  x = np.reshape(x, (2,-1))
+  x = np.transpose(x)
+  anim = animation.FuncAnimation(fig, animate, frames = x, interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
