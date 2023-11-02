@@ -90,7 +90,9 @@ if __name__ == '__main__':
   x = np.mgrid[0:2:50j,1:3:50j]
   x = np.reshape(x, (2,-1))
   x = np.transpose(x)
-  anim = animation.FuncAnimation(fig, animate, frames = x, interval=50)
+  xy = np.array[[i,j] for i in np.linspace(0,2,50) for j in np.linspace(1,3,50)]
+
+  anim = animation.FuncAnimation(fig, animate, frames = xy, interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
