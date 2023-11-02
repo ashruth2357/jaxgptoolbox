@@ -85,7 +85,7 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  anim = animation.FuncAnimation(fig, animate, frames = np.linspace([0,1],[2,3],50), interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(np.array([0,1]),np.array([2,3]),50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
@@ -102,7 +102,7 @@ def animate_star_circle(t):
     plt.axis("off")
     return im
 
-anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.mgrid[0.0:1.0:50j, 1.0:2.0:50j], interval=50)
+anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(0,2,50), interval=50)
 anim_star_circle.save("star_to_circle.mp4")
 
 # create video for circle to cross
