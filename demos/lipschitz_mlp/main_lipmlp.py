@@ -102,7 +102,7 @@ def animate_star_circle(t):
     plt.axis("off")
     return im
 
-anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(0,2,50), interval=50)
+anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(np.array([0,1]),np.array([2,3]),50), interval=50)
 anim_star_circle.save("star_to_circle.mp4")
 
 # create video for circle to cross
