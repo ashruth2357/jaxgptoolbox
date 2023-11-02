@@ -107,7 +107,6 @@ class lipmlp:
     """
     # concatenate coordinate and latent code
     x = np.append(x,t)
-    x = np.append(x,t+1)
 
 
     # forward pass
