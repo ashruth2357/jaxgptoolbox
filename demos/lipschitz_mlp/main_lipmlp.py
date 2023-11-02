@@ -85,13 +85,6 @@ if __name__ == '__main__':
       plt.axis('equal')
       plt.axis("off")
       return im
-  a = np.linspace(0,2,50)
-  b = np.linspace(1,3,50)
-  x,y = np.mgrid[0:2:50j,1:3:50j]
-  x = np.ravel(x)
-  y = np.ravel(y)
-  xy = np.vstack(x,y)
-  xy = np.transpose(xy)
 
   anim = animation.FuncAnimation(fig, animate, frames = np.linspace(array([0,2]),array([1,3]),50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
