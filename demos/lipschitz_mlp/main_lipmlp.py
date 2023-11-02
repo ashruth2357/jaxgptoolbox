@@ -79,7 +79,7 @@ if __name__ == '__main__':
   x = jgp.sample_2D_grid(hyper_params["grid_size"]) # sample on unit grid for visualization
   def animate(t):
       plt.cla()
-      out = model.forward_eval(params_final, np.array([t]), x)
+      out = model.forward_eval(params_final, np.array([t,t+1]), x)
       levels = onp.linspace(-0.5, 0.5, 21)
       im = plt.contourf(out.reshape(hyper_params['grid_size'],hyper_params['grid_size']), levels = levels, cmap=sdf_cm)
       plt.axis('equal')
@@ -128,7 +128,7 @@ anim_circle_cross.save("circle_to_cross.mp4")
 fig_cross_circle = plt.figure()
 def animate_cross_circle(t):
     plt.cla()
-    out = model.forward_eval(params_final, np.array([t]), x)
+    out = model.forward_eval(params_final, np.array([t,t+1]), x)
     levels = onp.linspace(-0.5, 0.5, 21)
     im = plt.contourf(out.reshape(hyper_params['grid_size'], hyper_params['grid_size']), levels=levels, cmap=sdf_cm)
     plt.axis('equal')
