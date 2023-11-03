@@ -145,7 +145,7 @@ class lipmlp:
     return out
   # Assuming forward_single_2d is defined as mentioned earlier
 
-def forward_vmap_2d(self, params_net, t, x):
+  def forward_vmap_2d(self, params_net, t, x):
     """
     Vectorized forward pass of a lipschitz MLP with a 2D latent code
     
@@ -160,7 +160,7 @@ def forward_vmap_2d(self, params_net, t, x):
     # Vectorize forward pass using jax.vmap for handling multiple query locations x
     # Assuming x is a batch of query locations
     return jax.vmap(lambda x_: self.forward_single_2d(params_net, t, x_))(x)
-def forward_eval_single_2d(self, params_final, t, x):
+  def forward_eval_single_2d(self, params_final, t, x):
     """
     (Optional) Forward pass of a mlp with a 2D latent code. This is useful to speed up the performance during test time.
     """
@@ -177,8 +177,8 @@ def forward_eval_single_2d(self, params_final, t, x):
     out = np.dot(combined_input, W) + b
     return out
 
-# The vmap version for multiple query locations
-def forward_eval_vmap_2d(self, params_final, t, x):
+  # The vmap version for multiple query locations
+  def forward_eval_vmap_2d(self, params_final, t, x):
     """
     Vectorized forward pass of a mlp with a 2D latent code for multiple query locations x.
     """
