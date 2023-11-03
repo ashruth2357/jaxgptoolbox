@@ -117,3 +117,71 @@ class lipmlp:
     out = np.dot(W, x) + b
     return out[0]
   forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None,0), out_axes=0)
+  def forward_single_2d(self, params_net, t, x):
+    """
+    Forward pass of a lipschitz MLP with a 2D latent code
+    
+    Inputs
+    params_net: parameters of the network
+    t: the 2D input feature of the shape (latent code)
+    x: a query location in the space
+
+    Outputs
+    out: implicit function value at x
+    """
+    # Concatenate coordinates and latent code along the last axis (axis=-1)
+    combined_input = np.concatenate((x, t), axis=1)
+
+    # Forward pass
+    for ii in range(len(params_net) - 1):
+        W, b, c = params_net[ii]
+        W = self.weight_normalization(W, jax.nn.softplus(c))
+        combined_input = jax.nn.relu(np.dot(combined_input, W) + b)
+
+    # Final layer
+    W, b, c = params_net[-1]
+    W = self.weight_normalization(W, jax.nn.softplus(c))
+    out = np.dot(combined_input, W) + b
+    return out
+  # Assuming forward_single_2d is defined as mentioned earlier
+
+def forward_vmap_2d(self, params_net, t, x):
+    """
+    Vectorized forward pass of a lipschitz MLP with a 2D latent code
+    
+    Inputs
+    params_net: parameters of the network
+    t: the 2D input feature of the shape (latent code)
+    x: query locations in the space
+
+    Outputs
+    out: implicit function values at query locations x
+    """
+    # Vectorize forward pass using jax.vmap for handling multiple query locations x
+    # Assuming x is a batch of query locations
+    return jax.vmap(lambda x_: self.forward_single_2d(params_net, t, x_))(x)
+def forward_eval_single_2d(self, params_final, t, x):
+    """
+    (Optional) Forward pass of a mlp with a 2D latent code. This is useful to speed up the performance during test time.
+    """
+    # Concatenate coordinate and latent code along the last axis
+    combined_input = np.concatenate((x, t), axis=-1)
+
+    # Forward pass
+    for ii in range(len(params_final) - 1):
+        W, b = params_final[ii]
+        combined_input = jax.nn.relu(np.dot(combined_input, W) + b)
+    
+    # Final layer
+    W, b = params_final[-1]
+    out = np.dot(combined_input, W) + b
+    return out
+
+# The vmap version for multiple query locations
+def forward_eval_vmap_2d(self, params_final, t, x):
+    """
+    Vectorized forward pass of a mlp with a 2D latent code for multiple query locations x.
+    """
+    return jax.vmap(lambda x_: self.forward_eval_single_2d(params_final, t, x_))(x)
+
+
