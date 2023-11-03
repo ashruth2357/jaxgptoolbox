@@ -27,9 +27,9 @@ if __name__ == '__main__':
 
    # define loss function and update function
   def loss(params_, alpha, x_, y0_, y1_,y2_):
-    out0 = model.forward(params_, np.array([0.0,1.0]), x_) # star when t = 0.0
-    out1 = model.forward(params_, np.array([1.0,2.0]), x_) # circle when t = 1.0
-    out2 = model.forward(params_, np.array([2.0,3.0]), x_) # cross when t = 2.0
+    out0 = model.forward(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
+    out1 = model.forward(params_, np.array([3.0,4.0]), x_) # circle when t = 1.0
+    out2 = model.forward(params_, np.array([3.0,0.0]), x_) # cross when t = 2.0
     loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2) + np.mean((out2 - y2_)**2)
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
@@ -86,7 +86,7 @@ if __name__ == '__main__':
       plt.axis("off")
       return im
 
-  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(np.array([0,2]),np.array([1,3]),50), interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(0,5,50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
@@ -103,7 +103,7 @@ def animate_star_circle(t):
     plt.axis("off")
     return im
 
-anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(np.array([0,1]),np.array([2,3]),50), interval=50)
+anim_star_circle = animation.FuncAnimation(fig_star_circle, animate_star_circle, frames=np.linspace(0,5,50), interval=50)
 anim_star_circle.save("star_to_circle.mp4")
 
 # create video for circle to cross
