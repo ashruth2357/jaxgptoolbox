@@ -27,10 +27,10 @@ if __name__ == '__main__':
 
    # define loss function and update function
   def loss(params_, alpha, x_, y0_, y1_,y2_):
-    out0 = model.forward(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
-    out1 = model.forward(params_, np.array([3.0,4.0]), x_) # circle when t = 1.0
-    out2 = model.forward(params_, np.array([3.0,0.0]), x_) # cross when t = 2.0
-    loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2) + np.mean((out2 - y2_)**2)
+    out0 = model.forward_vmap_2d(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
+    out1 = model.forward_vmap_2d(params_, np.array([3.0,4.0]), x_) # circle when t = 1.0
+    out2 = model.forward_vmap_2d(params_, np.array([3.0,0.0]), x_) # cross when t = 2.0
+    loss_sdf = np.mean(np.sum((out0 - y0_)**2),axis = 1) + np.mean((out1 - y1_)**2) + np.mean(np.sum((out2 - y2_)**2))
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
   x = jgp.sample_2D_grid(hyper_params["grid_size"]) # sample on unit grid for visualization
   def animate(t):
       plt.cla()
-      out = model.forward_eval(params_final, np.array([t]), x)
+      out = model.forward_eval_vmap_2d(params_final, np.array([t]), x)
       levels = onp.linspace(-0.5, 0.5, 21)
       im = plt.contourf(out.reshape(hyper_params['grid_size'],hyper_params['grid_size']), levels = levels, cmap=sdf_cm)
       plt.axis('equal')
