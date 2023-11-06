@@ -12,7 +12,7 @@ if __name__ == '__main__':
     "h_mlp": [64,64,64,64,64],
     "step_size": 1e-4,
     "grid_size": 32,
-    "num_epochs": 2000,
+    "num_epochs": 200000,
     "samples_per_epoch": 512
   }
   alpha = 1e-6
