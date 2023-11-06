@@ -27,9 +27,9 @@ if __name__ == '__main__':
 
    # define loss function and update function
   def loss(params_, alpha, x_, y0_, y1_,y2_):
-    out0 = model.forward_vmap_2d(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
-    out1 = model.forward_vmap_2d(params_, np.array([3.0,4.0]), x_) # circle when t = 1.0
-    out2 = model.forward_vmap_2d(params_, np.array([3.0,0.0]), x_) # cross when t = 2.0
+    out0 = model.forward(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
+    out1 = model.forward(params_, np.array([1.0,1.0]), x_) # circle when t = 1.0
+    out2 = model.forward(params_, np.array([2.0,4.0]), x_) # cross when t = 2.0
     loss_sdf = np.mean(np.sum((out0 - y0_)**2),axis = 1) + np.mean((out1 - y1_)**2) + np.mean(np.sum((out2 - y2_)**2))
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
@@ -79,14 +79,14 @@ if __name__ == '__main__':
   x = jgp.sample_2D_grid(hyper_params["grid_size"]) # sample on unit grid for visualization
   def animate(t):
       plt.cla()
-      out = model.forward_eval_vmap_2d(params_final, np.array([t]), x)
+      out = model.forward_eval(params_final, np.array([t]), x)
       levels = onp.linspace(-0.5, 0.5, 21)
       im = plt.contourf(out.reshape(hyper_params['grid_size'],hyper_params['grid_size']), levels = levels, cmap=sdf_cm)
       plt.axis('equal')
       plt.axis("off")
       return im
 
-  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(0,5,50), interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = np.linspace(0,2,50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
