@@ -66,7 +66,6 @@ class lipmlp:
     """
     # concatenate coordinate and latent code
     x = np.append(x, t)
-    x = np.append(x,t**2)
 
     # forward pass
     for ii in range(len(params_net) - 1):
@@ -108,6 +107,7 @@ class lipmlp:
     """
     # concatenate coordinate and latent code
     x = np.append(x, t)
+    x = np.append(x,t**2)
 
 
     # forward pass
