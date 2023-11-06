@@ -106,7 +106,8 @@ class lipmlp:
     (Optional) this is a standard forward pass of a mlp. This is useful to speed up the performance during test time 
     """
     # concatenate coordinate and latent code
-    x = np.append(x, np.array[t,t**2])
+    x = np.append(x, t)
+    x = np.append(x,t**2)
     
 
 
