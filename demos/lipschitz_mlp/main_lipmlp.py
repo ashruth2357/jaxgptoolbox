@@ -28,8 +28,8 @@ if __name__ == '__main__':
    # define loss function and update function
   def loss(params_, alpha, x_, y0_, y1_,y2_):
     out0 = model.forward(params_, np.array([0.0,0.0]), x_) # star when t = 0.0
-    out1 = model.forward(params_, np.array([1.0,1.0]), x_) # circle when t = 1.0
-    out2 = model.forward(params_, np.array([2.0,4.0]), x_) # cross when t = 2.0
+    out1 = model.forward(params_, np.array([3.0,4.0]), x_) # circle when t = 1.0
+    out2 = model.forward(params_, np.array([0.0,4.0]), x_) # cross when t = 2.0
     loss_sdf = np.mean((out0 - y0_)**2) + np.mean((out1 - y1_)**2) + np.mean((out2 - y2_)**2)
     loss_lipschitz = model.get_lipschitz_loss(params_)
     return loss_sdf + alpha * loss_lipschitz
@@ -90,7 +90,7 @@ if __name__ == '__main__':
   def generate_frames_0_0_to_2_4():
     num_frames = 50
     point_start = np.array([0.0, 0.0])  # Starting point (0,0)
-    point_end = np.array([2.0, 4.0])  # Ending point (2,4)
+    point_end = np.array([3.0, 4.0])  # Ending point (2,4)
     for i in range(num_frames):
         t = i / num_frames
         # Linear interpolation between start and end points
