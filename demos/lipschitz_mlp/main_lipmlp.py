@@ -86,7 +86,18 @@ if __name__ == '__main__':
       plt.axis("off")
       return im
 
-  anim = animation.FuncAnimation(fig, animate, frames = (0,2,50), interval=50)
+ # Function generating frames for the direct linear interpolation animation from (0,0) to (2,4)
+def generate_frames_0_0_to_2_4():
+    num_frames = 50
+    point_start = np.array([0.0, 0.0])  # Starting point (0,0)
+    point_end = np.array([2.0, 4.0])  # Ending point (2,4)
+    for i in range(num_frames):
+        t = i / num_frames
+        # Linear interpolation between start and end points
+        interpolated_point = point_start + t * (point_end - point_start)
+        yield interpolated_point
+
+  anim = animation.FuncAnimation(fig, animate, frames = generate_frames_0_0to_2_4(), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
