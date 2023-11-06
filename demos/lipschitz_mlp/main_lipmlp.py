@@ -90,7 +90,7 @@ if __name__ == '__main__':
   def generate_frames_0_0_to_2_4():
     num_frames = 50
     point_start = np.array([0.0, 0.0])  # Starting point (0,0)
-    point_end = np.array([3.0, 4.0])  # Ending point (2,4)
+    point_end = np.array([0.0, 4.0])  # Ending point (2,4)
     for i in range(num_frames):
         t = i / num_frames
         # Linear interpolation between start and end points
