@@ -106,8 +106,8 @@ class lipmlp:
     (Optional) this is a standard forward pass of a mlp. This is useful to speed up the performance during test time 
     """
     # concatenate coordinate and latent code
-    x = np.append(x, np.array[t,t**2])
-  
+    x = np.append(x, t)
+    x = np.append(x,t**2)
 
 
     # forward pass
@@ -117,7 +117,7 @@ class lipmlp:
     W, b = params_final[-1] # final layer
     out = np.dot(W, x) + b
     return out[0]
-  forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None,0), out_axes=0)
+  forward_eval = jax.vmap(forward_eval_single, in_axes=(None, None, None,0,None), out_axes=0)
   def forward_single_2d(self, params_net, t, x):
     """
     Forward pass of a lipschitz MLP with a 2D latent code
