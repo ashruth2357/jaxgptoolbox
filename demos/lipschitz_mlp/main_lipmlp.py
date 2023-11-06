@@ -86,7 +86,7 @@ if __name__ == '__main__':
       plt.axis("off")
       return im
 
-  anim = animation.FuncAnimation(fig, animate, frames = 500, interval=50)
+  anim = animation.FuncAnimation(fig, animate, frames = (0,2,50), interval=50)
   anim2 = animation.FuncAnimation(fig, animate, frames=np.mgrid[1.0:2.0:50j, 2.0:3.0:50j], interval=50)
   
   anim.save("lipschitz_mlp_interpolation.mp4")
